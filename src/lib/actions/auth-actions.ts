@@ -31,12 +31,7 @@ export async function loginAction(
         password,
       });
 
-      if (error) {
-        return { error: error.message };
-      }
-
-      if (data.user) {
-        // Fetch profile
+      if (!error && data.user) {
         const { data: profile } = await supabase
           .from('profiles')
           .select('*')
@@ -50,13 +45,15 @@ export async function loginAction(
           sameSite: 'lax',
           maxAge: 60 * 60 * 24 * 7,
         });
+
+        redirect('/dashboard');
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Authentication service error';
-      return { error: message };
+      if (err instanceof Error && err.message.includes('NEXT_REDIRECT')) {
+        throw err;
+      }
+      // Continue to demo auth fallback if Supabase auth fails
     }
-
-    redirect('/dashboard');
   }
 
   // Local / Demo Authentication Mode
