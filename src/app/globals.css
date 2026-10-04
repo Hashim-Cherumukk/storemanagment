@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  /* === PHASE 3 INSTITUTIONAL NEUTRAL PALETTE === */
+  --color-warm-bg: #F6F6F3;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F1F3F2;
+  --color-surface-hover: #EEF0F1;
+
+  /* === TEXT === */
+  --color-text-main: #202326;
+  --color-text-muted: #697077;
+  --color-text-light: #878D96;
+
+  /* === BORDERS === */
+  --color-border: #E3E5E7;
+  --color-border-subtle: #EDEFF1;
+
+  /* === RESTRAINED ACCENT & PRIMARY === */
+  --color-primary: #34495E;
+  --color-primary-hover: #2C3E50;
+  --color-primary-surface: #F0F4F8;
+  --color-primary-border: #D0D7DE;
+
+  --color-accent: #34495E;
+  --color-accent-hover: #263746;
+  --color-accent-surface: #F0F4F8;
+
+  /* === SEMANTIC COLORS === */
+  --color-success: #3F7654;
+  --color-success-bg: #F2F8F4;
+  --color-success-border: #D1E5D7;
+
+  --color-warning: #A87932;
+  --color-warning-bg: #FDF9F2;
+  --color-warning-border: #F5E8D0;
+
+  --color-danger: #B5524B;
+  --color-danger-bg: #FDF3F3;
+  --color-danger-border: #F5D3D1;
+
+  /* === TYPOGRAPHY === */
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  --background: #F6F6F3;
+  --foreground: #202326;
+  --card: #FFFFFF;
+  --card-foreground: #202326;
+  --border: #E3E5E7;
+  --primary: #34495E;
+  --accent: #34495E;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Institutional scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Focus ring accessibility */
+*:focus-visible {
+  outline: 2px solid #1E40AF;
+  outline-offset: 2px;
+}
