@@ -51,19 +51,22 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const demoSession = request.cookies.get('institution_demo_session');
+  const isAuthenticated = Boolean(user || demoSession?.value);
+
   const isPublicRoute =
     request.nextUrl.pathname.startsWith('/login') ||
     request.nextUrl.pathname.startsWith('/api') ||
     request.nextUrl.pathname.startsWith('/_next') ||
     request.nextUrl.pathname.includes('.');
 
-  if (!user && !isPublicRoute && request.nextUrl.pathname !== '/') {
+  if (!isAuthenticated && !isPublicRoute && request.nextUrl.pathname !== '/') {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
-  if (user && request.nextUrl.pathname === '/login') {
+  if (isAuthenticated && request.nextUrl.pathname === '/login') {
     const url = request.nextUrl.clone();
     url.pathname = '/dashboard';
     return NextResponse.redirect(url);
