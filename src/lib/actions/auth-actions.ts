@@ -104,26 +104,26 @@ export async function getCurrentUser(): Promise<Profile | null> {
         data: { user },
       } = await supabase.auth.getUser();
 
-      if (!user) return null;
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', user.id)
+          .single();
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
+        if (profile) return profile as Profile;
 
-      if (profile) return profile as Profile;
-
-      return {
-        id: user.id,
-        full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
-        email: user.email || '',
-        role: (user.user_metadata?.role as UserRole) || 'STOREKEEPER',
-        avatar_url: null,
-        is_active: true,
-        created_at: user.created_at,
-        updated_at: user.created_at,
-      };
+        return {
+          id: user.id,
+          full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
+          email: user.email || '',
+          role: (user.user_metadata?.role as UserRole) || 'STOREKEEPER',
+          avatar_url: null,
+          is_active: true,
+          created_at: user.created_at,
+          updated_at: user.created_at,
+        };
+      }
     } catch (err) {
       console.warn('Failed getting user from Supabase:', err);
     }
